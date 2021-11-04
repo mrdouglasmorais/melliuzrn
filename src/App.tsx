@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import GetPokemon from './Util/ApiCall';
 
 import {
@@ -10,7 +10,7 @@ import {
   Dimensions,
 } from 'react-native';
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <SafeAreaView style={{backgroundColor: '#FF22DD'}}>
       <View style={styles.header}>

@@ -9,8 +9,8 @@ import {
   Dimensions,
 } from 'react-native';
 
-function GetDogs() {
-  const [dog, setDog] = useState([]);
+const GetDogs: React.FC = () => {
+  const [dog, setDog] = useState<any[]>([]);
   const [reload, setReLoad] = useState(false);
   useEffect(() => {
     request
@@ -24,10 +24,10 @@ function GetDogs() {
     <View style={styles.default}>
       {dog.map((item, index) => (
         <View key={index}>
-          <Image style={styles.dogPicture} source={item.url} />
+          <Image style={styles.dogPicture} source={item} />
           <>
             {item?.breeds?.map(breed => (
-              <View>
+              <View key={breed.id}>
                 <Text>{breed.name}</Text>
                 <Text>{breed.bred_for}</Text>
                 <Text>{breed.temperament}</Text>
@@ -44,7 +44,7 @@ function GetDogs() {
       </Pressable>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   default: {

@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 
 import styles from './style';
 
-const Section = ({children, title}) => {
+const Section: React.FC = ({children, title}: any) => {
   return (
     <View style={styles.sectionContainer}>
       <Text style={styles.sectionTitle}>{title}</Text>
