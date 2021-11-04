@@ -25,7 +25,16 @@ function GetDogs() {
       {dog.map((item, index) => (
         <View key={index}>
           <Image style={styles.dogPicture} source={item} />
-          <Text>{item.name}</Text>
+          <>
+            {item?.breeds?.map(breed => (
+              <View>
+                <Text>{breed.name}</Text>
+                <Text>{breed.bred_for}</Text>
+                <Text>{breed.temperament}</Text>
+                <Text>{breed.origin}</Text>
+              </View>
+            ))}
+          </>
         </View>
       ))}
       <Pressable
