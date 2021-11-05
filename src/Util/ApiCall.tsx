@@ -9,22 +9,59 @@ import {
   Dimensions,
 } from 'react-native';
 
+import LottieView from 'lottie-react-native';
+
+interface IBreedsPet {
+  id: number;
+  name: string;
+  bred_for: string;
+  bred_group: string;
+  temperament: string;
+  origin: string;
+}
+
+interface IFindYouDogData {
+  id: string;
+  url: string;
+  breeds?: IBreedsPet[];
+}
+
 const GetDogs: React.FC = () => {
-  const [dog, setDog] = useState<any[]>([]);
+  const [dog, setDog] = useState<IFindYouDogData[]>([]);
   const [reload, setReLoad] = useState(false);
+  const [isLoad, setIsload] = useState(false);
   useEffect(() => {
+    setIsload(true);
     request
       .get('')
       .then(response => {
         setDog(response.data);
       })
-      .catch(() => alert('Houve um erro so se comunicar com a api'));
+      .catch(() => alert('Houve um erro so se comunicar com a api'))
+      .finally(() => {
+        setTimeout(() => {
+          setIsload(false);
+        }, 2000);
+      });
   }, [reload]);
+
+  if (isLoad) {
+    return (
+      <View style={styles.default}>
+        <LottieView
+          source={require('../Animation/load-dog.json')}
+          autoPlay
+          loop
+          style={styles.animation}
+        />
+      </View>
+    );
+  }
   return (
     <View style={styles.default}>
       {dog.map((item, index) => (
         <View key={index}>
-          <Image style={styles.dogPicture} source={item} />
+          <Image style={styles.dogPicture} source={{uri: item.url}} />
           <>
             {item?.breeds?.map(breed => (
               <View key={breed.id}>
@@ -63,6 +100,10 @@ const styles = StyleSheet.create({
   textPressable: {
     color: '#fff',
     textAlign: 'center',
+  },
+  animation: {
+    height: 500,
+    width: 500,
   },
 });
 
